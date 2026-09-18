@@ -11,9 +11,11 @@ Docker Compose setup.
 
 ### Docker Compose
 
+Requires Docker and Docker Compose.
+
 ```bash
 cp .env.docker.dev .env
-docker compose up --build
+make up
 ```
 
 Services:
@@ -23,14 +25,24 @@ Services:
 - Jaeger: <http://localhost:16686>
 - MongoDB: `localhost:27017`
 
+Stop everything with `make down`.
+
 ### Local Go process
 
-Requires Go 1.26+ and MongoDB.
+Requires:
+
+- Go 1.26+
+- `make`
+- A reachable MongoDB instance, e.g. `docker run -p 27017:27017 mongo:7`
 
 ```bash
 cp .env.dev .env
 make run
 ```
+
+Tracing is enabled by default and expects an OTLP/HTTP collector on
+`localhost:4318` (e.g. Jaeger, see the Docker Compose section). Set
+`TRACING_ENABLED=false` in `.env` if you don't want to run one locally.
 
 ## API
 

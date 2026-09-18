@@ -1,4 +1,4 @@
-.PHONY: run build test test-cover lint tidy mocks docker-build docker-up docker-down swagger
+.PHONY: run build test test-cover lint tidy mocks swagger docker-build up down
 
 run:
 	go run ./cmd/api
@@ -27,11 +27,11 @@ mocks:
 swagger:
 	go run github.com/swaggo/swag/cmd/swag@v1.16.6 init -g cmd/api/main.go -o docs --pd
 
-build:
+docker-build:
 	docker build -t fizzbuzz-api:local .
 
-run:
+up:
 	docker compose up --build
 
-stop:
+down:
 	docker compose down -v
