@@ -1,0 +1,15 @@
+.personal
+
+# Go
+bin/
+coverage.out
+coverage.html
+*.test
+
+# Env
+.env
+.env.local
+
+# IDE
+.vscode/
+.idea/

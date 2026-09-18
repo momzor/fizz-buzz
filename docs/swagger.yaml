@@ -1,0 +1,107 @@
+basePath: /
+definitions:
+  internal_adapter_http.errorResponse:
+    properties:
+      error:
+        type: string
+    type: object
+  internal_adapter_http.fizzBuzzResponse:
+    properties:
+      result:
+        items:
+          type: string
+        type: array
+    type: object
+  internal_adapter_http.statisticsResponse:
+    properties:
+      hits:
+        type: integer
+      int1:
+        type: integer
+      int2:
+        type: integer
+      limit:
+        type: integer
+      str1:
+        type: string
+      str2:
+        type: string
+    type: object
+info:
+  contact: {}
+  description: A production-ready, customizable FizzBuzz REST API with usage statistics.
+  title: FizzBuzz API
+  version: "1.0"
+paths:
+  /api/v1/fizzbuzz:
+    get:
+      description: Returns numbers from 1 to limit, replacing multiples of int1 by
+        str1, multiples of int2 by str2, and multiples of both by str1+str2.
+      parameters:
+      - description: First divisor
+        example: 3
+        in: query
+        name: int1
+        required: true
+        type: integer
+      - description: Second divisor
+        example: 5
+        in: query
+        name: int2
+        required: true
+        type: integer
+      - description: Upper bound (inclusive)
+        example: 100
+        in: query
+        name: limit
+        required: true
+        type: integer
+      - description: Replacement for multiples of int1
+        example: fizz
+        in: query
+        name: str1
+        required: true
+        type: string
+      - description: Replacement for multiples of int2
+        example: buzz
+        in: query
+        name: str2
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/internal_adapter_http.fizzBuzzResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/internal_adapter_http.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/internal_adapter_http.errorResponse'
+      summary: Generate a customized fizzbuzz sequence
+      tags:
+      - fizzbuzz
+  /api/v1/statistics:
+    get:
+      description: Returns the request parameters that were used the most, along with
+        their hit count.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/internal_adapter_http.statisticsResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/internal_adapter_http.errorResponse'
+      summary: Get the most frequently requested fizzbuzz parameters
+      tags:
+      - statistics
+swagger: "2.0"
